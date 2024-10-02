@@ -18,10 +18,22 @@ GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open("love_sandwiches")
 # Opens the exel sheet in google account that was set up before, name needs to be exact
 
-sales = SHEET.worksheet("sales")
+# Following commented out code was used to check if API is working
+#sales = SHEET.worksheet("sales")
 # Access data from sales tab in excel sheet and stores it in variable
-
-data = sales.get_all_values()
+#data = sales.get_all_values()
 # Uses a gspread method to get all values
+#print(data)
 
-print(data)
+def get_sales_data():
+    """
+    Get sales figures input from user
+    """
+    print("Please enter sales data from the last market.")
+    print("Data should be six numbers, separated by commas.")
+    print("Example: 10,20,30,40,50,60\n")
+
+    data_str = input("Enter your data here: ")
+    print(f"The data provided is {data_str}")
+
+get_sales_data()
