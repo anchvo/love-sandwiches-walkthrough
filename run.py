@@ -50,6 +50,7 @@ def validate_data(values):
     """
     try:
         # Code that should work with no errors if data is valid
+        [int(value) for value in values]
         if len(values) != 6:
             # Should length of the values list not be six
             raise ValueError(
