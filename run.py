@@ -79,31 +79,43 @@ def validate_data(values):
     return True
     # Data is valid and returns true, tells the while loop to break
 
-def update_sales_worksheet(data):
-    """
-    Update sales worksheet, add new row with the list data provided
-    """
-    print("Updating sales worksheet...\n")
-    sales_worksheet = SHEET.worksheet("sales")
-    # Uses gspread method and refers to sales worksheet 
-    # in excel sheet by correct name
-    sales_worksheet.append_row(data)
-    # Uses gspread method to add new row in sales worksheet 
-    # and fill it with provided list data 
-    print("Sales worksheet updated successfully.\n")
+# The following two functions were refactored into one function
+#def update_sales_worksheet(data):
+   # """
+   # Update sales worksheet, add new row with the list data provided
+   # """
+   # print("Updating sales worksheet...\n")
+   # sales_worksheet = SHEET.worksheet("sales")
+   # sales_worksheet.append_row(data)
+   # print("Sales worksheet updated successfully.\n")
 
-def update_surplus_worksheet(data):
+#def update_surplus_worksheet(data):
+   # """
+   # Update surplus worksheet, add new row with the list data provided
+   # """
+   # print("Updating surplus worksheet...\n")
+   # surplus_worksheet = SHEET.worksheet("surplus")
+   # surplus_worksheet.append_row(data)
+   # print("Surplus worksheet updated successfully.\n")
+
+def update_worksheet(data, worksheet):
     """
-    Update surplus worksheet, add new row with the list data provided
+    Receives a list of integers to be inserted into a worksheet
+    Update the relevant worksheet with the data provided
     """
-    print("Updating surplus worksheet...\n")
-    surplus_worksheet = SHEET.worksheet("surplus")
-    # Uses gspread method and refers to surplus worksheet 
-    # in excel sheet by correct name
-    surplus_worksheet.append_row(data)
-    # Uses gspread method to add new row in surplus worksheet 
-    # and fill it with provided list data 
-    print("Surplus worksheet updated successfully.\n")
+    # Refactored function to combine two previous functions to update each worksheet
+    # General function works by using parameters that are specified 
+    # when function is called in main function, 
+    # e.g. data = sales_data and worksheet = "sales"
+    print(f"Updating {worksheet} worksheet...\n")
+    worksheet_to_update = SHEET.worksheet(worksheet)
+    # Uses gspread method to refer to worksheet in excel, 
+    # the worksheet parameter is specified in function call, 
+    # allowing different worksheets to be called depending on which parameter is given
+    worksheet_to_update.append_row(data)
+    # Uses gspred method to add new row to worksheet and 
+    # fill it with provided data
+    print(f"{worksheet} worksheet updated successfully.\n")
 
 
 def calculate_surplus_data(sales_row):
@@ -133,9 +145,9 @@ def main():
     """
     data = get_sales_data()
     sales_data = [int(num) for num in data]
-    update_sales_worksheet(sales_data)
+    update_worksheet(sales_data, "sales")
     new_surplus_data = calculate_surplus_data(sales_data)
-    update_surplus_worksheet(new_surplus_data)
+    update_worksheet(new_surplus_data, "surplus")
     # Common practice to wrap all function calls in a main function
 
 print("Welcome to Love Sandwiches Data Automation")
